@@ -44,7 +44,9 @@ Outras versões do interpretador python ou sistema operacional podem funcionar, 
 
 Para iniciar uma partida, digite no terminal:
 
-`python server.py game player1 player 2 [-h] [-d delay] [-p pace]  [-o output-file] [-l log-history]`
+`py server.py game player1 player 2 [-h] [-d delay] [-p pace]  [-o output-file] [-l log-history]`
+
+Ex: py server.py othello advsearch/randomplayer/agent.py advsearch/randomplayer/agent.py -d 1 -p 0.3
 
 Nos parâmetros, game é o jogo a ser jogado (othello ou tttm para tic-tac-toe misere)  'player(1 ou 2)' são o caminhos dentro de `advsearch` onde estão implementados os make_move dos jogadores.
 
