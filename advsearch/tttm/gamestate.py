@@ -9,17 +9,18 @@ class GameState:
         self.board = board
         self.player = player
 
-    def is_terminal(self) -> bool:
+    def is_terminal(self) -> bool: # um estado é terminal se o tabuleiro estiver cheio ou se houver um vencedor (ou seja, se um jogador tiver perdido)
+        # entao jogo acabou 
         return self.board.is_full() or self.winner() is not None
 
-    def is_legal_move(self, move: Tuple[int, int]) -> bool:
+    def is_legal_move(self, move: Tuple[int, int]) -> bool:     # principal regra de jogo: não pode colocar uma peça em um local já ocupado, e deve estar dentro dos limites do tabuleiro
         """
         Checks whether the given move (x, y) is legal in this state.
         """
         col, row = move
-        return 0 <= row < 3 and 0 <= col < 3 and self.board.is_empty(row, col)
+        return 0 <= row < 3 and 0 <= col < 3 and self.board.is_empty(row, col) 
 
-    def legal_moves(self) -> set:
+    def legal_moves(self) -> set: # retorna todas as jogadas legais disponíveis no estado atual do jogo
         moves = set()
         for row in range(3):
             for col in range(3):
@@ -39,11 +40,13 @@ class GameState:
     def get_board(self) -> Board:
         return self.board
 
-    def copy(self) -> 'GameState':
+    def copy(self) -> 'GameState': 
         new_state = GameState(self.board.copy(), self.player)
         return new_state
 
-    def next_state(self, move: Tuple[int, int]) -> 'GameState':
+    def next_state(self, move: Tuple[int, int]) -> 'GameState': # essencial para busca com adversario,
+        # recebe um movimento e retorna o estado resultante após aplicar esse movimento
+        # seria a função sucessora no contexto de busca, mas aqui é específico para jogos de adversário, onde o movimento é aplicado e o jogador é alternado
         if not self.is_legal_move(move):
             raise ValueError("Invalid move.")
         
