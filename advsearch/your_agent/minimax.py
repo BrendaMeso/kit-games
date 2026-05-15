@@ -14,8 +14,9 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
     :return: (int, int) tuple with x, y coordinates of the move (remember: 0 is the first row/column)
     """
 
-    root_player = state.player
-
+    root_player = state.player  # qual jogador vai decidir a jogada agora
+                                # se vez de B, queremos a jogada que maximize a utilidade para B, e vice-versa
+                                # MIN é adversário, MAX é o jogador da raiz (root_player)
     def reached_depth_limit(depth):
         """
         Verifica se a busca chegou na profundidade máxima.
@@ -30,7 +31,7 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
 
         # Caso base:
         # se o jogo acabou ou chegamos na profundidade máxima,
-        # usamos a função de avaliação.
+        # usamos a função de avaliação que ira decidir o valor do estado para o jogador da raiz 
         if current_state.is_terminal() or reached_depth_limit(depth):
             return eval_func(current_state, root_player)
 
@@ -87,7 +88,7 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
 
     # A raiz é sempre uma decisão para o jogador atual,
     # então queremos a jogada com maior valor.
-    for move in state.legal_moves():
+    for move in sorted(state.legal_moves()):
         successor = state.next_state(move)
         value = alphabeta(successor, 1, alpha, beta)
 
