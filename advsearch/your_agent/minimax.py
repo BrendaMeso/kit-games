@@ -88,7 +88,7 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
 
     # A raiz é sempre uma decisão para o jogador atual,
     # então queremos a jogada com maior valor.
-    for move in sorted(state.legal_moves()):
+    for move in sorted(state.legal_moves()):  # 
         successor = state.next_state(move)
         value = alphabeta(successor, 1, alpha, beta)
 
@@ -97,5 +97,4 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
             best_move = move
 
         alpha = max(alpha, best_value)
-
     return best_move  # = (col, row) tuple 
