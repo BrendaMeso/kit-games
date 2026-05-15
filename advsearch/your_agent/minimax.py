@@ -97,4 +97,4 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
 
         alpha = max(alpha, best_value)
 
-    return best_move
+    return best_move  # = (col, row) tuple 
