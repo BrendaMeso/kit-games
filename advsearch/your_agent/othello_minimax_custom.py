@@ -68,7 +68,8 @@ def make_move(state) -> Tuple[int, int]:
 
     # agora usa depth ao invés de MAX_DEPTH
     move = minimax_move(state, depth, evaluate_custom)
-
+    
+    elapsed = time.perf_counter() - start_time # calcula tempo gasto na busca
     # Registra no CSV.
     with open(TIMING_LOG, "a", encoding="utf-8") as f:
         f.write(
