@@ -4,6 +4,7 @@ from ..othello.gamestate import GameState
 from ..othello.board import Board
 from .minimax import minimax_move
 
+
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
 #
@@ -34,15 +35,6 @@ def evaluate_count(state, player:str) -> float:
     :param state: state to evaluate (instance of GameState)
     :param player: player to evaluate the state for (B or W)
     """
-    board = state.board
-    player_count = 0
-    opponent_count = 0
 
-    for row in range(8):
-        for col in range(8):
-            if board[row][col] == player:
-                player_count += 1
-            elif board[row][col] == ('B' if player == 'W' else 'W'):
-                opponent_count += 1
 
-    return player_count - opponent_count
+    return NotImplementedError

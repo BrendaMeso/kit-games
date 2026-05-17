@@ -37,9 +37,10 @@ def minimax_move(state, max_depth:int, eval_func:Callable) -> Tuple[int, int]:
 
         moves = current_state.legal_moves()
 
-        # Segurança: se não houver jogadas, avalia o estado.
+        # Segurança: se não houver jogadas, avalia o estado, 
+        # mas em teoria GameState.is_terminal() deveria sempre ser True nesse caso, então não deveríamos chegar aqui.
         if not moves:
-            return eval_func(current_state, root_player)
+            return eval_func(current_state, root_player) 
 
         # Se é a vez do jogador da raiz, este é um nó MAX.
         if current_state.player == root_player:
