@@ -56,13 +56,18 @@ def make_move(state) -> Tuple[int, int]:
     empty_count = board.num_pieces(Board.EMPTY)
     # numero de casas vazias no tabuleiro (estado) atual --> indica etapa do jogo
     
-    start_time = time.perf_counter()
+    # profundidade dinâmica baseada na complexidade do estado
+    if empty_count < 12: # aqui (final de jogo) fator de ramificação é baixo, então pode buscar mais fundo
+        depth = 6
+    elif len(legal_moves) <= 5: # aqui (meio de jogo) fator de ramificação é moderado, então busca a profundidade média
+        depth = 5               # poucas jogadas possiveis, posso aprofundar mais
+    else:
+        depth = 4
 
-    # Chama minimax passando a função de avaliação customizada
-    move = minimax_move(state, MAX_DEPTH, evaluate_custom)
+    start_time = time.perf_counter() # inicia contagem de tempo para medir duração da busca
 
-    # Mede quanto tempo a função demorou para retornar a jogada
-    elapsed = time.perf_counter() - start_time
+    # agora usa depth ao invés de MAX_DEPTH
+    move = minimax_move(state, depth, evaluate_custom)
 
     # Registra no CSV.
     with open(TIMING_LOG, "a", encoding="utf-8") as f:
@@ -143,7 +148,7 @@ def corner_score(board, player: str, adversary: str) -> int:
 
 def corner_danger_score(board, player: str, adversary: str) -> int:
     """
-    Penaliza peças próximas a cantos vazios.
+    Penaliza peças próximas a cantos vazios. é local: só olha 3 casas perto do canto
     Se o canto está vazio, casas adjacentes a ele são perigosas.
     """
 
@@ -175,26 +180,32 @@ def corner_danger_score(board, player: str, adversary: str) -> int:
             elif board[row][col] == adversary:
                 adversary_danger += 1
 
-    return my_danger - adversary_danger
+    return my_danger - adversary_danger # meu risco relativo de entregar cantos para adversário
 
 
-
+# tabuleiro board, jogador player, adversário --> float controle estrutural baseado em linhas pouco contestadas
 def line_control_score(board, player: str, adversary: str) -> float:
     """
-    linhas, colunas ou diagonais com peças de uma só cor e vazios
-    recebem pequena pontuação porque indicam controle de parte do tabuleiro e potencial para formar linhas/colunas/diagonais fortes no futuro
-    corre risco pois adversário pode colocar peça para bloquear, mas ainda assim é melhor do que ter peças misturadas com as do adversário
-    
+    Mede coerência estrutural do tabuleiro.
+
+    Linhas, colunas e diagonais contendo peças de apenas
+    um jogador e espaços vazios recebem pequena pontuação,
+    pois podem indicar regiões pouco contestadas e potencial
+    de expansão futura.
     """
 
     score = 0.0
 
     for line in get_lines(board):
+
         player_count = line.count(player)
         adversary_count = line.count(adversary)
 
+        # linha "dominada" pelo jogador
         if player_count > 0 and adversary_count == 0:
             score += player_count
+
+        # linha "dominada" pelo adversário
         elif adversary_count > 0 and player_count == 0:
             score -= adversary_count
 
@@ -219,6 +230,7 @@ def evaluate_custom(state, player: str) -> float:
 
     adversary = opponent(player)
 
+    #game phase weighting
     if state.is_terminal(): # primeiro verifica se o estado é terminal, porque nesse caso a heurística deve refletir vitória, derrota ou empate, independentemente dos outros fatores
         winner = state.winner()
 
@@ -247,32 +259,52 @@ def evaluate_custom(state, player: str) -> float:
 
     my_frontier = frontier_discs(board, player)
     adversary_frontier = frontier_discs(board, adversary)
-    frontier_score = adversary_frontier - my_frontier  # menos (my)frontier disks = melhor, porque são casas vulneráveis
+    frontier_score = my_frontier - adversary_frontier  # menos (my)frontier disks = melhor, porque são casas vulneráveis
 
     my_stable = stable_edge_discs_from_corners(board, player)
     adversary_stable = stable_edge_discs_from_corners(board, adversary)
-    stable_score = my_stable - adversary_stable  # menos frontier 
+    stable_score = my_stable - adversary_stable  # 
 
-    line_score = line_control_score(board, player, adversary)
+    potential_line_score = line_control_score(board, player, adversary)
 
-    # A diferença de peças é mais importante no final --> usar peso dinâmico de peças
-    if empty_count > 20:  #inicio do jogo
+    # pesos dinâmicos: a importância das métricas muda conforme a fase do jogo
+
+    if empty_count > 20:  # início do jogo
+        # prioridade:
+        # mobilidade, flexibilidade e evitar vulnerabilidade
+
         piece_weight = 0.5
-    elif empty_count > 10:  #meio do jogo
+        mobility_weight = 10.0
+        potential_weight = 5.0
+        stability_weight = 4.0
+
+    elif empty_count > 10:  # meio do jogo
+        # equilíbrio entre mobilidade e consolidação estrutural
+
         piece_weight = 2.0
-    else:                   #final do jogo --> mais pesopara dif de peças
+        mobility_weight = 6.0
+        potential_weight = 3.0
+        stability_weight = 8.0
+
+    else:  # final do jogo
+        # prioridade:
+        # maximizar peças e consolidar posições estáveis
+
         piece_weight = 6.0
+        mobility_weight = 2.0
+        potential_weight = 1.0
+        stability_weight = 14.0
 
     score = (
         piece_weight * piece_diff
         + 1.0 * pos_score
-        + 8.0 * mob_score
-        + 3.0 * potential_score
+        + mobility_weight * mob_score
+        + potential_weight * potential_score
         + 30.0 * corners
         - 12.0 * danger
-        + 4.0 * frontier_score
-        + 10.0 * stable_score
-        + 0.5 * line_score
+        - 4.0 * frontier_score
+        + stability_weight * stable_score
+        + 0.5 * potential_line_score
     )
-
+    # objetivo é transformar função de avaliação em uma função numérica/matemática mais interpretável
     return float(score)
