@@ -1,3 +1,4 @@
+# py server.py othello advsearch/randomplayer/agent.py  advsearch/your_agent/othello_mcts.py -d 5 -p 0.5
 import random
 import math
 import time
@@ -26,8 +27,12 @@ class MCTSNode:
         self.move = move
 
         self.children = []
-        self.untried_moves = list(state.legal_moves())
-
+        
+        if state.is_terminal():  # se o estado é terminal, não há jogadas para expandir
+            self.untried_moves = []
+        else:
+            self.untried_moves = list(state.legal_moves()) # jogadas ainda não testadas a partir deste estado
+        
         self.visits = 0
         self.wins = 0.0
 
