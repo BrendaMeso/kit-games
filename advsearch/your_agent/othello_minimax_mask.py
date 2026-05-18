@@ -1,3 +1,7 @@
+# python test_othello_evaluations.py
+# python server.py othello advsearch/your_agent/othello_minimax_mask.py advsearch/randomplayer/agent.py
+
+
 import random
 from typing import Tuple
 from ..othello.gamestate import GameState
