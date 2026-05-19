@@ -1,9 +1,9 @@
 # RELATÓRIO TRABALHO 4 - BUSCA COM ADVERSÁRIO
 
-# Brenda Melo Soares - 00587730
-# Lauren Lázaro - 00179051
-# Melchior Boaretto Neto - 00587628
-# (Turma A)
+ Brenda Melo Soares - 00587730
+ Lauren Lázaro - 00179051
+ Melchior Boaretto Neto - 00587628
+ (Turma A)
 
 ESTRUTURA DOS ARQUIVOS
 
@@ -31,6 +31,7 @@ A implementação foi desenvolvida em Python utilizando apenas bibliotecas padr�
 TIC-TAC-TOE MISERE
 
 python test_minimax_tttm.py
+
 ....
 ----------------------------------------------------------------------
 Ran 4 tests in 0.099s
@@ -59,16 +60,16 @@ Para esse teste especificamente, foi feita uma pesquisa em relação às estrat�
 Os resultados sugerem que a implementação consegue explorar corretamente os estados do jogo até a profundidade terminal, tomando decisões consistentes e evitando jogadas que levariam à derrota quando existe uma alternativa segura disponível.
 
 
-OTHELLO
+OTHELLO<br>
 
-TESTAR COM  py server.py othello advsearch/your_agent/othello_minimax_custom.py advsearch/randomplayer/agent.py -d 5   
+TESTAR COM  py server.py othello advsearch/your_agent/othello_minimax_custom.py advsearch/randomplayer/agent.py -d 5 <br>  
    
 A heurística customizada implementada para o Othello foi baseada em uma combinação linear de resultados, ou seja, uma soma ponderada de métricas estratégicas do jogo. A ideia principal foi construir uma função de avaliação mais dinâmica do que simplesmente considerar a quantidade de peças no tabuleiro.
 Para desenvolvê-la, combinamos ideias clássicas utilizadas em agentes de Othello, juntamente a adaptações e a métricas adicionais experimentais.
 O objetivo principal dessa abordagem é tornar a avaliação mais próxima do raciocínio estratégico humano, equilibrando fatores como mobilidade, estabilidade, controle territorial e vulnerabilidade estrutural. A função segue também a lógica clássica de jogos de soma-zero: valores positivos representam posições favoráveis ao jogador avaliado, enquanto valores negativos representam desvantagens ou penalidades estruturais.
 
 
-ADAPTAÇÃO baseada em FASES
+ADAPTAÇÃO baseada em FASES<br>
 Além disso, foram utilizados pesos dinâmicos que dependem da fase da partida - o que deixou a heurística menos rígida e mais adaptada ao contexto do jogo.
 
 A prioridade de cada métrica varia conforme a etapa da partida:
@@ -78,46 +79,46 @@ Final do jogo: maximizar peças e consolidar posições estáveis
 
 Essa ideia foi motivada pela observação de que, em Othello, possuir mais peças no início da partida nem sempre representa vantagem estratégica - ideia que será justificada na explicação das métricas.
 
-FONTES
-Uma das principais referências utilizadas foi o material disponível em:
+FONTES<br>
+Uma das principais referências utilizadas foi o material disponível em:<br>
 http://home.datacomm.ch/t_wolf/tw/misc/reversi/html/index.html
 
-Além do seguinte artigo:
+Além do seguinte artigo:<br>
 Sannidhanam, V. and Annamalai, M., 2004. An analysis of heuristics in othello. Muthukaruppan," An Analysis of Heuristics in Othello. 
 
 A partir dessa referência, foi incorporada a ideia de que a métrica de contagem de peças (“coin parity”) deve receber maior importância apenas no final da partida. Essa observação também explica a utilização de pesos dinâmicos para outras métricas da heurística.
 
-Isto é, a heurística não foi baseada em apenas uma única fonte. A ideia de mobilidade, mobilidade potencial, estabilidade e controle de cantos é amplamente discutida na literatura de Othello. Enquanto a proposta de utilizar pesos dinâmicos para múltiplas métricas e a métrica experimental de “controle estrutural de linhas” foram adaptações próprias desenvolvidas sobre essas ideias.
-DIFERENÇA DE PEÇAS (piece_diff)
+Isto é, a heurística não foi baseada em apenas uma única fonte. A ideia de mobilidade, mobilidade potencial, estabilidade e controle de cantos é amplamente discutida na literatura de Othello. Enquanto a proposta de utilizar pesos dinâmicos para múltiplas métricas e a métrica experimental de “controle estrutural de linhas” foram adaptações próprias desenvolvidas sobre essas ideias.<br>
+DIFERENÇA DE PEÇAS (piece_diff)<br>
 A primeira métrica utilizada é a que mede quantas peças o jogador possui em relação ao adversário: piece_diff = player_count - adversary_count
 
 Embora intuitiva, possui baixa relevância estratégica no início da partida, pois em Othello muitas peças podem representar exposição excessiva e perda de mobilidade. Por isso, seu peso é pequeno no início do jogo e aumenta progressivamente no final, momento em que a quantidade de peças passa a ser realmente decisiva para a vitória.
 
-VALOR POSICIONAL (positional_score)
+VALOR POSICIONAL (positional_score)<br>
 Conforme indicado, também foi utilizada uma máscara de valor posicional (EVAL_TEMPLATE), baseada na ideia clássica de que determinadas regiões do tabuleiro possuem importância estratégica diferente. Mede, portanto, qualidade posicional, e não apenas quantidade de peças.
 Os cantos recebem valores altos, pois normalmente representam posições estáveis e difíceis de serem revertidas. Já as casas adjacentes a cantos vazios recebem penalizações, já que podem facilitar a captura futura desses cantos pelo adversário.
 
-MOBILIDADE (mobility_score)
+MOBILIDADE (mobility_score)<br>
 A heurística também considera mobilidade, medida pela diferença entre a quantidade de jogadas legais disponíveis para o jogador e para o adversário (player_moves - adversary_moves).
 É uma das mais importantes no Othello, pois jogadores com maior mobilidade possuem mais liberdade estratégica e maior capacidade de controlar o ritmo da partida.
 
 Além da mobilidade imediata, foi implementada uma estimativa de mobilidade potencial, baseada na quantidade de casas vazias adjacentes às peças adversárias. A ideia é estimar oportunidades futuras de expansão e possíveis jogadas disponíveis em estados posteriores do jogo.
 
-CANTOS (corner_score e corner_danger_score)
+CANTOS (corner_score e corner_danger_score)<br>
 O controle de cantos também tem um papel essencial na avaliação. Peças posicionadas nos cantos tendem a ser extremamente vantajosas, pois não podem mais ser capturadas durante a partida. Os cantos também geralmente estabilizam regiões inteiras do tabuleiro, permitindo construir bordas mais seguras. É medida a diferença entre a quantidade de cantos ocupados pelo jogador e pelo adversário, atribuindo peso elevado a essa vantagem estrutural.
 
 Em relação aos cantos, foi considerado também o perigo próximo. Essa métrica penaliza peças localizadas nas casas adjacentes a cantos ainda vazios — conhecidas classicamente como “X-squares” e “C-squares”. Essas posições são perigosas porque frequentemente permitem ao adversário capturar o canto na jogada seguinte. Assim, a heurística mede o risco relativo de o jogador entregar cantos importantes ao adversário.
 
-PEÇAS DE FRONTEIRA (frontier_discs)
+PEÇAS DE FRONTEIRA (frontier_discs)<br>
 São peças adjacentes a pelo menos uma casa vazia. Em geral, são consideradas vulneráveis porque podem ser facilmente capturadas em jogadas futuras. 
 Diferentemente da heurística de perigo de cantos (local e focada apenas nas regiões dos cantos) essa mede vulnerabilidade estrutural global em todo o tabuleiro. Quanto maior a quantidade de peças de fronteira do jogador, pior tende a ser sua estabilidade posicional.
 
 
-ESTABILIDADE (stable_edge_discs_from_corners)
+ESTABILIDADE (stable_edge_discs_from_corners)<br>
 É um conceito clássico de Othello que mede o quão difícil é capturar determinadas peças futuramente. Consideramos principalmente estabilidade em bordas conectadas a cantos ocupados. Por exemplo, se um canto pertence ao jogador e existem peças contínuas conectadas a ele ao longo da borda, essas peças tendem a ser muito difíceis de inverter depois. Assim, a heurística estima estabilidade estrutural sem realizar análises extremamente complexas do tabuleiro completo.
 
 
-ORIGINAL (line_control_score)
+ORIGINAL (line_control_score)<br>
 Por fim, foi implementada uma métrica cuja ideia é estimar um tipo de “controle estrutural” ou coerência territorial do tabuleiro, identificando regiões potencialmente favoráveis para expansão futura (por serem pouco contestadas). 
 
 potential_line_score = line_control_score(board, player, adversary)
@@ -130,8 +131,8 @@ De forma geral, a heurística customizada busca combinar fatores táticos imedia
 
 Formalmente, a função heurística h(s), onde s representa um estado do jogo, é definida como:
 
-h(s) = w_p·P(s) + Pos(s) + w_m·M(s) + w_pm·PM(s)
-       + 30·C(s) - 12·D(s) - 4·F(s)
+h(s) = w_p·P(s) + Pos(s) + w_m·M(s) + w_pm·PM(s) <br>
+       + 30·C(s) - 12·D(s) - 4·F(s) <br>
        + w_s·S(s) + 0.5·L(s)
 
 Onde:
@@ -152,7 +153,7 @@ Onde:
 
 
 
-CRITÉRIO DE PARADA DO AGENTE
+CRITÉRIO DE PARADA DO AGENTE<br>
 O critério de parada utilizado no agente baseado em minimax com poda alfa-beta foi profundidade máxima dinâmica, ajustada conforme a complexidade estimada do estado atual do jogo.
 
 Como o custo da busca cresce exponencialmente em relação ao fator de ramificação (aproximadamente b^d, onde b representa o número médio de jogadas possíveis e d a profundidade da busca), estados com menos jogadas legais permitem buscas mais profundas sem aumento excessivo do custo computacional.
@@ -168,7 +169,7 @@ Na implementação em othello_minimax_custom.py , foram definidos os seguintes c
 Essa estratégia busca equilibrar qualidade das decisões e custo computacional, permitindo buscas mais profundas em estados menos complexos.
 
 
-EXTRAS
+EXTRAS<br>
 Implementação do MCTS (Monte Carlo Tree Search) - alternativa ao agente baseado em minimax com poda alfa-beta. O algoritmo foi implementado de forma genérica, dessa forma utilizado tanto no Othello quanto no Tic-Tac-Toe Misère, já que ambos os jogos utilizam a mesma interface de estados e importam funções do mcts.py
 O MCTS foi estruturado seguindo as quatro etapas clássicas do algoritmo:
 Seleção: os nós mais promissores da árvore são escolhidos utilizando a fórmula UCB1, que busca equilibrar a exploração de novas possibilidades e aproveitamento de jogadas com bons resultados anteriores
