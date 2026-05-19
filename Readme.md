@@ -30,11 +30,13 @@ A implementação foi desenvolvida em Python utilizando apenas bibliotecas padr�
 
 TIC-TAC-TOE MISERE
 
+```text
 python test_minimax_tttm.py
 
 ....
 ----------------------------------------------------------------------
 Ran 4 tests in 0.099s
+```
 
 Desempenho da implementação do minimax com poda alfa-beta: 
 Foram realizados 10 testes para cada item. Além disso, alternamos a ordem dos jogadores “player 1” e “player 2” nos testes (i) e (iii) para verificar que os resultados apresentariam o mesmo padrão, ou seja, a ordem não afetaria significativamente o comportamento do agente. 
