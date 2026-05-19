@@ -8,19 +8,20 @@ Melchior Boaretto Neto - 00587628
 ESTRUTURA DOS ARQUIVOS
 
 ```text
-Inf-Div@s/   <-- diretório na raiz do .zip
-│-- __init__.py
-│-- mcts.py                    <-- implementação do MCTS
-│-- minimax.py                 <-- implementação da poda alfa-beta
-│-- othello_minimax_count.py   <-- heurística de contagem
-│-- othello_minimax_custom.py  <-- heurística customizada
-│-- othello_minimax_mask.py    <-- heurística posicional
-│-- tournament_agent.py        <-- melhor agente para o torneio de Othello
-│-- tttm_minimax.py            <-- minimax para Tic-Tac-Toe Misère
-│-- Readme.md                  <-- relatório da implementação
-│-- othello_mcts.py            <-- MCTS para Othello
-│-- tttm_mcts.py               <-- MCTS para Tic-Tac-Toe Misère
-└-- othello_utils.py           <-- métricas e operações auxiliares para Othello
+Inf-Div@s <-- diretorio na raiz do .zip
+|-- __init__.py
+|-- mcts.py <-- implementação do MCTS 
+|-- minimax.py <-- implementação da poda alfa-beta
+|-- othello_minimax_count.py <-- heuristica de contagem
+|-- othello_minimax_custom.py <-- heuristica customizada
+|-- othello_minimax_mask.py <-- heuristica posicional
+|-- tournament_agent.py <-- melhor agente pro torneio de Othello (não preenchido ainda)
+|-- tttm_minimax.py <-- minimax que joga o tic-tac-toe misere
+|-- Readme.md <-- com seu relatório
+|-- othello_mcts.py <-- MCTS que joga Othello 
+|-- tttm_mcts.py <-- MCTS que joga tic-tac-toe misere
+\-- othello_utils.py <-- métricas e operações reutilizáveis para avaliação heurística de estados de Othello  
+
 ```  
 
 Obs.: o nome do agente foi escolhido porém ainda não trocado no código para a primeira entrega (pois requer atualização de imports)
