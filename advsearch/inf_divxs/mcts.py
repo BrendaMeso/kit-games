@@ -1,4 +1,4 @@
-# py server.py othello advsearch/randomplayer/agent.py  advsearch/your_agent/othello_mcts.py -d 5 -p 0.5
+# py server.py othello advsearch/randomplayer/agent.py  advsearch/inf_divxs/othello_mcts.py -d 5 -p 0.5
 import random
 import math
 import time
@@ -7,7 +7,7 @@ from typing import Tuple
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
 #
-# Nao esqueca de renomear 'your_agent' com o nome
+# Nao esqueca de renomear 'inf_divxs' com o nome
 # do seu agente.
 
 """

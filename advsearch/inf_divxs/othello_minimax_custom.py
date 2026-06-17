@@ -1,4 +1,4 @@
-#   py server.py othello advsearch/humanplayer/agent.py advsearch/your_agent/othello_minimax_custom.py -d 60 -p 0.3
+#   py server.py othello advsearch/humanplayer/agent.py advsearch/inf_divxs/othello_minimax_custom.py -d 60 -p 0.3
 
 import random
 import time

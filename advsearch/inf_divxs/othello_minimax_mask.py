@@ -1,5 +1,5 @@
 # python test_othello_evaluations.py
-# python server.py othello advsearch/your_agent/othello_minimax_mask.py advsearch/randomplayer/agent.py
+# python server.py othello advsearch/inf_divxs/othello_minimax_mask.py advsearch/randomplayer/agent.py
 
 
 import random
@@ -11,7 +11,7 @@ from .minimax import minimax_move
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
 #
-# Nao esqueca de renomear 'your_agent' com o nome
+# Nao esqueca de renomear 'inf_divxs' com o nome
 # do seu agente.
 
 # mask template adjusted from https://web.fe.up.pt/~eol/IA/MIA0203/trabalhos/Damas_Othelo/Docs/Eval.html

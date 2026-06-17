@@ -1,4 +1,4 @@
-from advsearch.your_agent.minimax import minimax_move
+from advsearch.inf_divxs.minimax import minimax_move
 
 
 class DebugState:

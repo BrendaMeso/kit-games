@@ -1,4 +1,4 @@
-# py server.py tttm advsearch/randomplayer/agent.py advsearch/your_agent/tttm_mcts.py -d 5 -p 0.5
+# py server.py tttm advsearch/randomplayer/agent.py advsearch/inf_divxs/tttm_mcts.py -d 5 -p 0.5
 
 from typing import Tuple
 from .mcts import make_move as mcts_move

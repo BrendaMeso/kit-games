@@ -2,7 +2,7 @@ import unittest
 from collections import OrderedDict, defaultdict
 from typing import Tuple, Union
 
-import advsearch.your_agent.mcts as mcts  # mude your_agent pelo nome do seu modulo
+import advsearch.inf_divxs.mcts as mcts  # mude inf_divxs pelo nome do seu modulo
 
 
 # jogo muito simples. o estado inicial tem 3 sucessores, 

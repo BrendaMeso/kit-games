@@ -5,9 +5,9 @@ from advsearch.tttm.board import Board
 from advsearch.tttm.gamestate import GameState
 import advsearch.timer as timer
 
-# mude your_agent pelo nome do seu modulo nos imports abaixo
-import advsearch.your_agent.minimax as minimax          
-import advsearch.your_agent.tttm_minimax as tttm_agent  
+# mude inf_divxs pelo nome do seu modulo nos imports abaixo
+import advsearch.inf_divxs.minimax as minimax
+import advsearch.inf_divxs.tttm_minimax as tttm_agent
 
 def mirror_move(state: GameState) -> Tuple[int, int]:
     """
@@ -48,7 +48,7 @@ class TestAlphaBetaTTTM(unittest.TestCase):
 
     def test_utility(self):
         """
-        Esse teste verifica a funcao utility em advsearch.your_agent.tttm_minimax
+        Esse teste verifica a funcao utility em advsearch.inf_divxs.tttm_minimax
         """
 
         # estado terminal com vitoria das brancas

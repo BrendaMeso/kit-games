@@ -8,7 +8,7 @@
 ESTRUTURA DOS ARQUIVOS
 
 ```text
-Inf-Div@s <-- diretorio na raiz do .zip
+Inf-Divxs <-- diretorio na raiz do .zip
 |-- __init__.py
 |-- mcts.py <-- implementação do MCTS 
 |-- minimax.py <-- implementação da poda alfa-beta
@@ -23,8 +23,6 @@ Inf-Div@s <-- diretorio na raiz do .zip
 \-- othello_utils.py <-- métricas e operações reutilizáveis para avaliação heurística de estados de Othello  
 
 ```  
-
-Obs.: o nome do agente foi escolhido porém ainda não trocado no código para a primeira entrega (pois requer atualização de imports)
 
 A implementação foi desenvolvida em Python utilizando apenas bibliotecas padrão da linguagem. Não foi necessária a instalação de bibliotecas externas.
 

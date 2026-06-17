@@ -1,5 +1,5 @@
 # python test_othello_evaluations.py
-# python server.py othello advsearch/your_agent/othello_minimax_count.py advsearch/randomplayer/agent.py
+# python server.py othello advsearch/inf_divxs/othello_minimax_count.py advsearch/randomplayer/agent.py
 
 
 import random
