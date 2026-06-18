@@ -60,11 +60,11 @@ def make_move(state) -> Tuple[int, int]:
     
     # profundidade dinâmica baseada na complexidade do estado
     if empty_count < 12: # aqui (final de jogo) fator de ramificação é baixo, então pode buscar mais fundo
-        depth = -1
+        depth = 6
     elif len(legal_moves) <= 5: # aqui (meio de jogo) fator de ramificação é moderado, então busca a profundidade média
-        depth = -1              # poucas jogadas possiveis, posso aprofundar mais
+        depth = 5               # poucas jogadas possiveis, posso aprofundar mais
     else:
-        depth = -1
+        depth = 4
 
     start_time = time.perf_counter() # inicia contagem de tempo para medir duração da busca
 

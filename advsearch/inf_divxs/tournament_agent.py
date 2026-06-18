@@ -1,7 +1,11 @@
 import random
 from typing import Tuple
+
+from advsearch.inf_divxs import minimax
 from ..othello.gamestate import GameState
 from ..othello.board import Board
+from .othello_minimax_custom import make_move
+from advsearch.inf_divxs import othello_minimax_custom
 
 # Voce pode criar funcoes auxiliares neste arquivo
 # e tambem modulos auxiliares neste pacote.
@@ -20,11 +24,9 @@ def make_move(state) -> Tuple[int, int]:
     :return: (int, int) tuple with x, y coordinates of the move (remember: 0 is the first row/column)
     """
 
-    # o codigo abaixo apenas retorna um movimento aleatorio valido para
-    # a primeira jogada 
-    # Remova-o e coloque a sua implementacao da poda alpha-beta
+    return othello_minimax_custom.make_move(state)
 
-    if state.game_name == 'Othello':
-        return random.choice([(2, 3), (4, 5), (5, 4), (3, 2)])
+    #if state.game_name == 'Othello':
+    #    return random.choice([(2, 3), (4, 5), (5, 4), (3, 2)])
 
 
