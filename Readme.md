@@ -153,7 +153,10 @@ Onde:
 
 
 
-CRITÉRIO DE PARADA DO AGENTE<br>
+CRITÉRIOS DE PARADA DO AGENTE<br>
+
+PROFUNDIDADE MÁXIMA DINÂMICA
+
 O critério de parada utilizado no agente baseado em minimax com poda alfa-beta foi profundidade máxima dinâmica, ajustada conforme a complexidade estimada do estado atual do jogo.
 
 Como o custo da busca cresce exponencialmente em relação ao fator de ramificação (aproximadamente b^d, onde b representa o número médio de jogadas possíveis e d a profundidade da busca), estados com menos jogadas legais permitem buscas mais profundas sem aumento excessivo do custo computacional.
@@ -167,6 +170,19 @@ Na implementação em othello_minimax_custom.py , foram definidos os seguintes c
 - profundidade 4 nos demais casos.
 
 Essa estratégia busca equilibrar qualidade das decisões e custo computacional, permitindo buscas mais profundas em estados menos complexos.
+
+
+TEMPORIZAÇÃO
+
+O critério de parada utilizado, visando principalmente o torneio, foi contar até pouco antes de 5 segundos (4.85s é o ideal, 4.5s fica folgado o bastante)
+e parar em tempo de retornar à execução do jogo sem extrapolar o tempo.
+Além disso, foi implementada uma variação que, para toda rodada, mede o desempenho médio por nodo explorado no primeiro nível e adapta o tempo máximo para
+o resto.
+
+Para que essa estratégia funcione, é necessário guardar o melhor resultado do nível anterior ao que está sendo explorado. Tendo em vista que um timeout
+invalida o que foi feito no nível atual e retornaria uma jogada ruim.
+
+Esse [video](https://youtu.be/FSP7fBCSBl8) ilustra como o agente com mais tempo para pensar sempre ganha do que pensa por uma fração de segundo.
 
 
 EXTRAS<br>

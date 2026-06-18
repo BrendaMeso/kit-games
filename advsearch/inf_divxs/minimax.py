@@ -79,12 +79,12 @@ def minimax_move(state, max_depth: int, eval_func: Callable) -> Tuple[int, int]:
             elapsed_time = time.perf_counter() - start_time
 
             # Print 1
-            print(f"\r[Minimax] Profundidade Alvo: {current_target_depth} | Nodos: {node_count[0]} | Limite: {time_data.time_limit:.2f}s | Decorrido: {elapsed_time:.2f}s", end="", flush=True)
+            # print(f"\r[Minimax] Profundidade Alvo: {current_target_depth} | Nodos: {node_count[0]} | Limite: {time_data.time_limit:.2f}s | Decorrido: {elapsed_time:.2f}s", end="", flush=True)
 
             if elapsed_time > time_data.time_limit:
 
                 # Print 2
-                print(f"\n[Timeout] Limite de {time_data.time_limit:.4f}s atingido na Profundidade {current_target_depth}! Interrompendo recursão...")
+                # print(f"\n[Timeout] Limite de {time_data.time_limit:.4f}s atingido na Profundidade {current_target_depth}! Interrompendo recursão...")
                 raise TimeoutException()
 
         # Caso base:
@@ -183,6 +183,6 @@ def minimax_move(state, max_depth: int, eval_func: Callable) -> Tuple[int, int]:
             break
 
     # Print 3
-    print()
+    # print()
     minimax_move.last_node_count = node_count[0]
     return best_move
