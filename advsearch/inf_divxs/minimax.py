@@ -53,6 +53,14 @@ def minimax_move(state, max_depth: int, eval_func: Callable) -> Tuple[int, int]:
 
     root_player = state.player
 
+    def order_moves(moves_list, current_state):
+
+        if len(moves_list) <= 1:
+            return moves_list
+
+        # O reverse ali funciona pra ordenar em ordem decrescente
+        return sorted(moves_list, key=lambda m: eval_func(current_state.next_state(m), root_player), reverse=True)
+
     def reached_depth_limit(depth, current_target_depth):
         """
         Verifica se a busca chegou na profundidade máxima.
@@ -148,7 +156,7 @@ def minimax_move(state, max_depth: int, eval_func: Callable) -> Tuple[int, int]:
 
             # A raiz é sempre uma decisão para o jogador atual,
             # então queremos a jogada com maior valor.
-            for move in sorted(legal_moves_root):
+            for move in order_moves(legal_moves_root, state):
                 successor = state.next_state(move)
                 value = alphabeta(successor, 1, alpha, beta, current_iteration_depth)
 
